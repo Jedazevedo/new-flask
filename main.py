@@ -7,21 +7,24 @@ class Jogo():
         self.nome = nome
         self.categoria = categoria
         self.console = console
-jogo1 = Jogo("Super Mario", 'Açao', 'SNES')
-jogo2 = Jogo("Pokemom Gold", 'RPG', 'GBA')
-jogo3 = Jogo("Mortal Kombat", 'Luta', 'SNES')
-jogo4 = Jogo("Elder Ring", 'RPG', 'PS4')
     
-lista =[jogo1, jogo2, jogo3, jogo4]
+lista =[]
 
+# primeira rota do site, vai puxar um html 
+# em titulos vai setar no arquivo index a string
+# em jogos = lista vai pegar as informações da lista e
+# plotar dentro do arquivo index
 @app.route('/')
 def inicio():
     return render_template('index.html', 
                            titulo='Jogos',
                            jogos = lista)
+
+# arquivo de cadastros, vai abrir tela de cadastros
 @app.route('/novo')
 def novo_jogo():
     return render_template('novo.html')
+
 
 @app.route('/criar', methods=['POST',])
 def criar():
@@ -32,5 +35,9 @@ def criar():
     lista.append(jogo)
     return redirect('/')
 
+# rota de login da nossa aplicação
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
 app.run(debug=True)
