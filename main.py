@@ -10,7 +10,7 @@ class Jogo():
         self.console = console
     
 lista =[]
-435
+434-435
 
 # primeira rota do site, vai puxar um html 
 # em titulos vai setar no arquivo index a string
@@ -27,7 +27,7 @@ def inicio():
 @app.route('/novo')
 def novo_jogo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect('/login')
+        return redirect('/login?proxima=novo')
     return render_template('novo.html',
                             title="Cadastro de jogos",
                             title_head="Cadastro")
@@ -45,7 +45,8 @@ def criar():
 
 @app.route('/login')
 def login():
-    return render_template('login.html', 
+    proxima = request.args.get("proxima")
+    return render_template('login.html', proxima=proxima,
                            title_head="Login")
 
 @app.route('/autenticar', methods=['POST',])
@@ -53,7 +54,8 @@ def autenticar():
     if '123' == request.form['senha']:
         session['usuario_logado'] = request.form['usuario']
         flash(request.form['usuario'] + ' Logado com sucesso')
-        return redirect('/')
+        proxima_pagina = request.form['proxima']
+        return redirect('/{}'.format(proxima_pagina))
     else:
         flash('Senha ou usuario errado')
         return redirect('/login')

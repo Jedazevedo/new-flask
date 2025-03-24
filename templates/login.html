@@ -13,7 +13,8 @@
 
 <h3>Faça o login </h3>
 <form method="POST" action="/autenticar">
-    <div class="form-group">
+     <input type="hidden" name="proxima" value="{{proxima or '/'}}">
+     <div class="form-group">
       <label>Nome de Usuário: </label>
       <input type="text" class="form-control" name="usuario" placeholder="Nome">
      
