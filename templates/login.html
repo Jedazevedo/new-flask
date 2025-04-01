@@ -12,8 +12,8 @@
 {% endwith %}
 
 <h3>Faça o login </h3>
-<form method="POST" action="/autenticar">
-     <input type="hidden" name="proxima" value="{{proxima or '/'}}">
+<form method="POST" action="{{ url_for('autenticar') }}">
+     <input type="hidden" name="proxima" value="{{proxima or url_for('inicio')}}">
      <div class="form-group">
       <label>Nome de Usuário: </label>
       <input type="text" class="form-control" name="usuario" placeholder="Nome">

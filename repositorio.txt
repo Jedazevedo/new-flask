@@ -1,1 +1,1 @@
-git@github.com:Jedazevedo/flask_list.git
+git@github.com:Jedazevedo/new-flask.git

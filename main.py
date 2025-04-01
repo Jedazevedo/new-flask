@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 
 app = Flask(__name__)
 app.secret_key = 'teste'
@@ -8,7 +8,15 @@ class Jogo():
         self.nome = nome
         self.categoria = categoria
         self.console = console
-    
+class Usuario():
+    def __init__(self, id, nome, senha):
+        self.id = id
+        self.nome = nome
+        self.senha = senha   
+
+usuario1 = Usuario(1, 'Lucas', '123')
+usuario2 = Usuario(2, 'Lucas', '123')     
+usuario3 = Usuario(3, 'Lucas', '123')   
 lista =[]
 434-435
 
@@ -25,9 +33,9 @@ def inicio():
 
 # arquivo de cadastros, vai abrir tela de cadastros
 @app.route('/novo')
-def novo_jogo():
+def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect('/login?proxima=novo')
+        return redirect(url_for('login', proxima=url_for('novo')))
     return render_template('novo.html',
                             title="Cadastro de jogos",
                             title_head="Cadastro")
@@ -39,7 +47,7 @@ def criar():
     console = request.form['console']
     jogo = Jogo(nome, categoria, console)
     lista.append(jogo)
-    return redirect('/')
+    return redirect(url_for('inicio'))
 
 # rota de login da nossa aplicação
 
@@ -55,14 +63,14 @@ def autenticar():
         session['usuario_logado'] = request.form['usuario']
         flash(request.form['usuario'] + ' Logado com sucesso')
         proxima_pagina = request.form['proxima']
-        return redirect('/{}'.format(proxima_pagina))
+        return redirect(proxima_pagina)
     else:
         flash('Senha ou usuario errado')
-        return redirect('/login')
+        return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
     session['usuario_logado'] = None
     flash('Nenhum usuario deslogado')
-    return redirect('/')
+    return redirect(url_for('inicio'))
 app.run(debug=True)
